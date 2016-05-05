@@ -36,7 +36,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="378.0" layoutY="554.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="373.0" text="Wyświetl zadania/Edytuj projekt">
+      <Button fx:id="edytujProjekt" layoutX="378.0" layoutY="554.0" mnemonicParsing="false" onAction="#edytujProjekt" prefHeight="54.0" prefWidth="373.0" text="Edytuj projekt/Wyświetl zadania">
          <font>
             <Font size="24.0" />
          </font>

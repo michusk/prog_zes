@@ -25,7 +25,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="94.0" layoutY="752.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="204.0" text="Utwórz zadanie">
+      <Button fx:id="utworzZadanie" layoutX="94.0" layoutY="752.0" mnemonicParsing="false" onAction="#utworzZadanie" prefHeight="54.0" prefWidth="204.0" text="Utwórz zadanie">
          <font>
             <Font size="24.0" />
          </font>

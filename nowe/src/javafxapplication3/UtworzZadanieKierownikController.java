@@ -22,16 +22,12 @@ import javafx.stage.Stage;
  *
  * @author sony vaio
  */
-public class ProjektyKierownikController implements Initializable {
+public class UtworzZadanieKierownikController implements Initializable {
 
-    @FXML
-    private Button wyloguj;
     @FXML
     private Button wstecz;
     @FXML
-    private Button utworzProjekt;
-    @FXML
-    private Button edytujProjekt;
+    private Button wyloguj;
 
     /**
      * Initializes the controller class.
@@ -42,48 +38,24 @@ public class ProjektyKierownikController implements Initializable {
     }    
 
     @FXML
+    private void wstecz() throws IOException {
+        
+        Stage stage; 
+        Parent root;
+        stage = (Stage) wstecz.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("zadaniaKierownik.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
     private void wyloguj() throws IOException {
         
         Stage stage; 
         Parent root;
         stage = (Stage) wyloguj.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("logowanie.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void wstecz() throws IOException {
-        
-        Stage stage; 
-        Parent root;
-        stage = (Stage) wstecz.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("panelKierownik.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void utworzProjekt() throws IOException {
-        
-        Stage stage; 
-        Parent root;
-        stage = (Stage) utworzProjekt.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("utworzProjektKierownik.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void edytujProjekt() throws IOException {
-        
-        Stage stage; 
-        Parent root;
-        stage = (Stage) edytujProjekt.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("edytujProjektKierownik.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
