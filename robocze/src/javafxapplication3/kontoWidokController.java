@@ -14,44 +14,42 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.apache.commons.dbutils.DbUtils;
 
 /**
  * FXML Controller class
  *
  * @author sony vaio
  */
-public class kontoEdycjaController implements Initializable {
+public class kontoWidokController implements Initializable {
 
-    @FXML
-    private Button wstecz;
-    @FXML
-    private Button zapiszZmiany;
     @FXML
     private Button wyloguj;
     @FXML
-    private PasswordField passwordtb;
+    private Text id;
     @FXML
-    private TextField imietb;
+    private Text imie;
     @FXML
-    private TextField nazwiskotb;
+    private Text nazwisko;
     @FXML
-    private TextField emailtb;
+    private Text email;
     @FXML
-    private TextField adrestb;
+    private Text adres;
     @FXML
-    private TextField telefontb;
+    private Text telefon;
+    @FXML
+    private Text ranga;
+    @FXML
+    private Button edytujProfil;
+    @FXML
+    private Button wstecz;
     
     @FXML
     private void wyloguj() throws IOException {
@@ -64,25 +62,77 @@ public class kontoEdycjaController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     @FXML
     private void wstecz() throws IOException {
         
         Stage stage; 
         Parent root;
         stage = (Stage) wstecz.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("kontoWidok.fxml"));
+        
+        Connection conn;
+        try {
+        String login = FXMLDocumentController.log;
+        String query = "select Idrangi from uzytkownicy where Email='"+login+"' limit 1";
+        conn = new Driver().getConnection();
+        //Uruchamiamy zapytanie do bazy danych
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        rs.next();
+             
+            long count = rs.getRow();
+            
+            if(count>0) {
+                
+  
+              Integer r = rs.getInt("Idrangi");
+     
+                String konto;
+               
+                switch(r) {
+                case  4: konto = "panelPracownik.fxml";break;
+                case  3: konto = "panelKierownik.fxml";break;
+                case  2: konto = "panelDyrektor.fxml";break;
+                
+                default: konto = "panelAdmin.fxml";break;
+                }
+        root = FXMLLoader.load(getClass().getResource(konto));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        }}
+        catch (SQLException ex) {
+            Logger.getLogger(kontoWidokController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    @FXML
+    private void edytujProfil() throws IOException {
+        
+        Stage stage; 
+        Parent root;
+        stage = (Stage) edytujProfil.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("kontoEdycja.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+    
+    //public void edytujProfil() {
+    
+    //}
+    
+    
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          Connection conn;
+        
+        
+                         Connection conn;
                         try {
                             String login = FXMLDocumentController.log;
                             String query = 
@@ -103,16 +153,14 @@ public class kontoEdycjaController implements Initializable {
                                 String telefon = rs.getString("Telefon");
                                 String ranga = rs.getString("Nazwarangi");
                                 
-                                String haslo = rs.getString("Haslo");
                                 
-                                
-                                
-                                this.imietb.setText(imie);
-                                this.nazwiskotb.setText(nazwisko);
-                                this.emailtb.setText(email);
-                                this.adrestb.setText(adres);
-                                this.telefontb.setText(telefon);
-                                this.passwordtb.setText(haslo);
+                                this.id.setText(""+id);
+                                this.imie.setText(imie);
+                                this.nazwisko.setText(nazwisko);
+                                this.email.setText(email);
+                                this.adres.setText(adres);
+                                this.telefon.setText(telefon);
+                                this.ranga.setText(ranga);
                                 
                                 
         
@@ -121,43 +169,11 @@ public class kontoEdycjaController implements Initializable {
                         } catch (SQLException ex) {
                             Logger.getLogger(kontoWidokController.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                       
+                        
+        // TODO
     }    
-
-    @FXML
-    private void zapiszzmiany(ActionEvent event) {
-         Connection connection = null;
-        try {
-            connection = new Driver().getConnection();
-            Statement statement = null;
-            String login = FXMLDocumentController.log;
-            String insertTableSQL = "UPDATE uzytkownicy" + " set Imie ='"+imietb.getText()+"', Nazwisko ='"+nazwiskotb.getText()+"', Email ='"+ emailtb.getText()+"', Haslo ='"+passwordtb.getText()+"', Telefon ='"+telefontb.getText()+"', Adres ='"+adrestb.getText()+"'" + " where " + "Email ='"+ login +"'";
-				//+ "(Imie, Nazwisko, Email, Haslo, Telefon, Adres) " + "VALUES "
-				//+ "('"+imietb.getText()+"', '"+nazwiskotb.getText()+"', '"+ emailtb.getText()+"', '"+passwordtb.getText()+"', '"+telefontb.getText()+"', '"+adrestb.getText()+"') ";
-            statement = connection.createStatement();
-            statement.executeUpdate(insertTableSQL);
-            //ResultSet  rs = statement.executeUpdate(insertTableSQL);
-           // int zetem = statement.executeUpdate(insertTableSQL);
-           // System.out.println("numberOfRowsUpdated=" + zetem);
-           //rs.next();
-            
-            
-            //PreparedStatement preparedStatement = connection.prepareStatement("insert into uzytkownicy"+" (Imie, Nazwisko, Email, Adres, Telefon, Haslo) values"+ "(q, w, e, r, 4, y);");
-//            preparedStatement.setString(1, imietb.getText());
-//            preparedStatement.setString(2, nazwiskotb.getText());
-//            preparedStatement.setString(3, emailtb.getText());
-//            preparedStatement.setString(4, adrestb.getText());
-//            preparedStatement.setString(5, telefontb.getText());
-//            preparedStatement.setString(6, passwordtb.getText());
-//preparedStatement .executeUpdate();
-           // ResultSet rs = preparedStatement.executeQuery();
-           
-    }
-        catch (SQLException ex) {
-           new Alert(Alert.AlertType.WARNING,"Problem z bazą").show();
-           ex.printStackTrace();
-        } finally {
-            DbUtils.closeQuietly(connection);
-        }}}
     
-
     
+    
+}
