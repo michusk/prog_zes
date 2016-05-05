@@ -21,14 +21,12 @@ import javafx.stage.Stage;
  *
  * @author sony vaio
  */
-public class ZadaniaKierownikController implements Initializable {
+public class UtworzProjektKierownikController implements Initializable {
 
     @FXML
     private Button wyloguj;
     @FXML
     private Button wstecz;
-    @FXML
-    private Button edytujZadanie;
 
     /**
      * Initializes the controller class.
@@ -56,19 +54,7 @@ public class ZadaniaKierownikController implements Initializable {
         Stage stage; 
         Parent root;
         stage = (Stage) wyloguj.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("panelKierownik.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void edytujZadanie() throws IOException {
-        
-        Stage stage; 
-        Parent root;
-        stage = (Stage) edytujZadanie.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("edytujZadanieKierownik.fxml"));
+        root = FXMLLoader.load(getClass().getResource("projektyKierownik.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

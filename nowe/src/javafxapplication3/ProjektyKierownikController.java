@@ -27,6 +27,8 @@ public class ProjektyKierownikController implements Initializable {
     private Button wyloguj;
     @FXML
     private Button wstecz;
+    @FXML
+    private Button utworzProjekt;
 
     /**
      * Initializes the controller class.
@@ -55,6 +57,18 @@ public class ProjektyKierownikController implements Initializable {
         Parent root;
         stage = (Stage) wstecz.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("panelKierownik.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void utworzProjekt() throws IOException {
+        
+        Stage stage; 
+        Parent root;
+        stage = (Stage) utworzProjekt.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("utworzProjektKierownik.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
